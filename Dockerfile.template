@@ -1,0 +1,23 @@
+FROM resin/%%RESIN_MACHINE_NAME%%-buildpack-deps
+
+# Enable systemd, as Resin requires this
+ENV INITSYSTEM on
+
+# Make the hardware type available as a runtime env var
+ENV RESIN_ARCH %%RESIN_ARCH%%
+ENV RESIN_MACHINE_NAME %%RESIN_MACHINE_NAME%%
+
+
+RUN apt-get update && apt-get install -yq \
+    python-dev python-pip git
+
+
+RUN mkdir /opt/weather-monitor
+WORKDIR /opt/weather-monitor
+RUN git clone https://github.com/adafruit/Adafruit_Python_BMP.git
+RUN cd Adafruit_Python_BMP && sudo python setup.py install
+RUN wget abyz.co.uk/rpi/pigpio/pigpio.zip && unzip pigpio.zip && cd PIGPIO && make && sudo make install
+RUN systemctl enable pigpiod
+COPY . /opt/weather-monitor
+
+CMD ["/opt/weather-monitor/sample.py"]
