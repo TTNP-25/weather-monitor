@@ -28,7 +28,7 @@ PIN_AIRQ=7
 
 # update thingspeak routine (max once every 15 seconds)
 def update_thingspeak(data1, data2, data3, data4):
-        params = urllib.urlencode({"field1": data1, "field2": data2, "field3": data3, "field4": data4,'key':THINGSPEAK_APIWRITE})
+        params = urllib.urlencode({"field1": data1, "field2": data2, "field3": data3, "field4": data4,'api_key':THINGSPEAK_APIWRITE})
         headers = {"Content-typZZe": "application/x-www-form-urlencoded","Accept": "text/plain"}
         conn = httplib.HTTPConnection("api.thingspeak.com:80")                
         try:

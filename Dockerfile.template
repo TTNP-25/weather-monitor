@@ -20,4 +20,4 @@ RUN wget abyz.co.uk/rpi/pigpio/pigpio.zip && unzip pigpio.zip && cd PIGPIO && ma
 RUN cp /opt/weather-monitor/pigpiod.service /etc/systemd/system/
 RUN systemctl enable pigpiod
 
-CMD ["/opt/weather-monitor/sample.py"]
+CMD ["/opt/weather-monitor/thingspeak_update.py"]
