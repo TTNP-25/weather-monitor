@@ -8,9 +8,6 @@ PIGPIO/
 # C extensions
 *.so
 
-# config
-config.py
-
 # Distribution / packaging
 .Python
 env/
