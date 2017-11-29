@@ -14,10 +14,9 @@ RUN apt-get update && apt-get install -yq \
 
 RUN mkdir /opt/weather-monitor
 WORKDIR /opt/weather-monitor
-RUN git clone https://github.com/adafruit/Adafruit_Python_BMP.git
-RUN cd Adafruit_Python_BMP && sudo python setup.py install
-RUN wget abyz.co.uk/rpi/pigpio/pigpio.zip && unzip pigpio.zip && cd PIGPIO && make && sudo make install
 COPY . /opt/weather-monitor
+RUN pip install -r requirements.txt
+RUN wget abyz.co.uk/rpi/pigpio/pigpio.zip && unzip pigpio.zip && cd PIGPIO && make && sudo make install
 RUN cp /opt/weather-monitor/pigpiod.service /etc/systemd/system/
 RUN systemctl enable pigpiod
 
