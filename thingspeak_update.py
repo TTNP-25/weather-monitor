@@ -72,19 +72,6 @@ if __name__ == "__main__":
         print( "" )
   
   
-#        # Humidity and temp from DHT22 (outisde)
-#        s = DHT22.sensor(pi, PIN_DHT22, LED=None, power=8)   
-#        s.trigger()
-#        time.sleep(0.2)
-#        humidity=s.humidity()
-#        temp1=s.temperature()
-        
-#       si = DHT22.sensor(pi, PIN_DHT22i, LED=None, power=8)   
-#       si.trigger()
-#       time.sleep(0.2)
-#       humidityi=si.humidity()
-        
-
         bmp_readings = bmp_sensor.get_data()
         print(bmp_readings)
         print( "Air Quality: " + str(aqi))    
