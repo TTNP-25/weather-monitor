@@ -95,7 +95,7 @@ if __name__ == "__main__":
         temperature = 0
         temperature=(temp1+temp2)/2
 
-        update_thingspeak(temperature, humidity, pressure, airq)
+        update_thingspeak(temperature, humidity, pressure, aqi)
         print( "Temp (DHT22) " + str(temp1))
         print( "Temp (BMP)" + str(temp2))
         print( "Humidity (outide): " + str(humidity))
