@@ -33,33 +33,33 @@ class BMP():
     self.bus = smbus.SMBus(1) # Rev 2 Pi, Pi 2 & Pi 3 uses self.bus 1
                        # Rev 1 Pi uses self.bus 0
   
-  def getShort(data, index):
+  def getShort(self, data, index):
     # return two bytes from data as a signed 16-bit value
     return c_short((data[index+1] << 8) + data[index]).value
   
-  def getUShort(data, index):
+  def getUShort(self, data, index):
     # return two bytes from data as an unsigned 16-bit value
     return (data[index+1] << 8) + data[index]
   
-  def getChar(data,index):
+  def getChar(self, data,index):
     # return one byte from data as a signed char
     result = data[index]
     if result > 127:
       result -= 256
     return result
   
-  def getUChar(data,index):
+  def getUChar(self, data,index):
     # return one byte from data as an unsigned char
     result =  data[index] & 0xFF
     return result
   
-  def readBME280ID(addr=DEVICE):
+  def readBME280ID(self, addr=DEVICE):
     # Chip ID Register Address
     REG_ID     = 0xD0
     (chip_id, chip_version) = self.bus.read_i2c_block_data(addr, REG_ID, 2)
     return (chip_id, chip_version)
   
-  def readBME280All(addr=DEVICE):
+  def readBME280All(self, addr=DEVICE):
     # Register Addresses
     REG_DATA = 0xF7
     REG_CONTROL = 0xF4
@@ -159,7 +159,7 @@ class BMP():
   
     return temperature/100.0,pressure/100.0,humidity
   
-  def get_data():
+  def get_data(self):
   
     temperature,pressure,humidity = self.readBME280All()
     results = {}
