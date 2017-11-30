@@ -163,7 +163,7 @@ class BMP():
   
     temperature,pressure,humidity = self.readBME280All()
     results = {}
-    results['temperature'] = temperature
+    results['cTemp'] = temperature
     results['pressure'] = pressure
     results['humidity'] = humidity
     return results

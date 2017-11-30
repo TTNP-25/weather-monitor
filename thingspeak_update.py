@@ -43,9 +43,9 @@ def update_thingspeak(data1, data2, data3, data4):
 # main loop
 if __name__ == "__main__":
 
+     s = airqsense(pi, PIN_AIRQ) # set the GPIO pin number
      while True:
      
-        s = airqsense(pi, PIN_AIRQ) # set the GPIO pin number
   
         # Use 30s for a properly calibrated reading.
         time.sleep(30) 
@@ -57,29 +57,17 @@ if __name__ == "__main__":
             print("Error\n")
             continue
   
-        print( "Air Quality Measurements for PM2.5:" )
-        print( "  " + str(int(c)) + " particles/0.01ft^3" )
-  
         # convert to SI units
         concentration_ugm3=s.pcs_to_ugm3(c)
-        print( "  " + str(int(concentration_ugm3)) + " ugm^3")
         
         # convert SI units to US AQI
         # input should be 24 hour average of ugm3, not instantaneous reading
         aqi=s.ugm3_to_aqi(concentration_ugm3)
         
-        print( "  Current AQI (not 24 hour avg): " + str(int(aqi)))
-        print( "" )
-  
-  
         bmp_readings = bmp_sensor.get_data()
         print(bmp_readings)
-        print( "Air Quality: " + str(aqi))    
 
         update_thingspeak(bmp_readings['cTemp'],
                           bmp_readings['pressure'],
                           aqi,
-                          0)
-        
-        pi.stop() # Disconnect from Pi.
-        time.sleep(5)
+                          bmp_readings['humidity'])
