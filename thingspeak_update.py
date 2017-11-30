@@ -14,17 +14,18 @@
 
 # import libraries
 import sys, httplib, urllib, time, Adafruit_BMP.BMP085, DHT22, pigpio, atexit
-BMP085sensor=Adafruit_BMP.BMP085.BMP085()
+BMP085sensor=Adafruit_BMP.BMP085.BMP085(address=0x76)
 from config import *
 from air_quality import sensor as airqsense
 
 # Setup RPi GPIO pins
 PIN_DHT22=8
-PIN_BMP085_SDA=0
-PIN_BMP085_SCL=0
+PIN_BMP085_SDA=2
+PIN_BMP085_SCL=3
 PIN_TGS2600=0
 PIN_AIRQ=7
 
+pi = pigpio.pi() # Connect to Pi.
 
 # update thingspeak routine (max once every 15 seconds)
 def update_thingspeak(data1, data2, data3, data4):
