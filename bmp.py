@@ -78,6 +78,7 @@ class BMP():
         # Convert pressure and temperature data to 19-bits
         adc_p = ((data[0] * 65536) + (data[1] * 256) + (data[2] & 0xF0)) / 16
         adc_t = ((data[3] * 65536) + (data[4] * 256) + (data[5] & 0xF0)) / 16
+        adc_h = ((data[6] * 65536) + (data[7] * 256) + (data[8] & 0xF0)) / 16
         
         # Temperature offset calculations
         var1 = ((adc_t) / 16384.0 - (dig_T1) / 1024.0) * (dig_T2)
@@ -104,4 +105,5 @@ class BMP():
         results['cTemp'] = cTemp
         results['fTemp'] = fTemp
         results['pressure'] = pressure
+        results['humidity'] = adc_h
         return results
