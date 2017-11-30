@@ -5,14 +5,14 @@
 # https://www.controleverything.com/content/Barometer?sku=BMP280_I2CSs#tabs-0-product_tabset-2
 
 
-import smself.bus
+import smbus
 import time
 
 class BMP():
 
     def __init__(self):
         # Get I2C self.bus
-        self.bus = smself.bus.SMBus(1)
+        self.bus = smbus.SMBus(1)
 
         # BMP280 address, 0x76(118)
         # Read data back from 0x88(136), 24 bytes
