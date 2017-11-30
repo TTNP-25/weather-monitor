@@ -13,19 +13,16 @@
 # rpi sd card hardeneing
 
 # import libraries
-import sys, httplib, urllib, time, Adafruit_BMP.BMP085, DHT22, pigpio, atexit
-BMP085sensor=Adafruit_BMP.BMP085.BMP085(address=0x76)
+import sys, httplib, urllib, time, bmp, DHT22, pigpio, atexit
 from config import *
 from air_quality import sensor as airqsense
 
 # Setup RPi GPIO pins
 PIN_DHT22=8
-PIN_BMP085_SDA=2
-PIN_BMP085_SCL=3
-PIN_TGS2600=0
 PIN_AIRQ=7
 
 pi = pigpio.pi() # Connect to Pi.
+bmp_sensor = bmp.BMP()
 
 # update thingspeak routine (max once every 15 seconds)
 def update_thingspeak(data1, data2, data3, data4):
@@ -75,31 +72,26 @@ if __name__ == "__main__":
         print( "" )
   
   
-        # Humidity and temp from DHT22 (outisde)
-        s = DHT22.sensor(pi, PIN_DHT22, LED=None, power=8)   
-        s.trigger()
-        time.sleep(0.2)
-        humidity=s.humidity()
-        temp1=s.temperature()
+#        # Humidity and temp from DHT22 (outisde)
+#        s = DHT22.sensor(pi, PIN_DHT22, LED=None, power=8)   
+#        s.trigger()
+#        time.sleep(0.2)
+#        humidity=s.humidity()
+#        temp1=s.temperature()
         
 #       si = DHT22.sensor(pi, PIN_DHT22i, LED=None, power=8)   
 #       si.trigger()
 #       time.sleep(0.2)
 #       humidityi=si.humidity()
         
-        # temp and pressure from BMP085
-        temp2=BMP085sensor.read_temperature()
-        pressure = BMP085sensor.read_pressure()
 
-        # calc average temp of 2 sensors
-        temperature = 0
-        temperature=(temp1+temp2)/2
+        bmp_readings = bmp_sensor.get_data()
 
-        update_thingspeak(temperature, humidity, pressure, aqi)
-        print( "Temp (DHT22) " + str(temp1))
-        print( "Temp (BMP)" + str(temp2))
-        print( "Humidity (outide): " + str(humidity))
-        print( "Pressure: " + str(pressure))    
+        update_thingspeak(bmp_readings['cTemp'],
+                          0,
+                          bmp_readings['pressure'],
+                          aqi)
+        print(bmp_readings)
         print( "Air Quality: " + str(aqi))    
         
         pi.stop() # Disconnect from Pi.
