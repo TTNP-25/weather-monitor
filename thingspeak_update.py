@@ -86,13 +86,13 @@ if __name__ == "__main__":
         
 
         bmp_readings = bmp_sensor.get_data()
-
-        update_thingspeak(bmp_readings['cTemp'],
-                          0,
-                          bmp_readings['pressure'],
-                          aqi)
         print(bmp_readings)
         print( "Air Quality: " + str(aqi))    
+
+        update_thingspeak(bmp_readings['cTemp'],
+                          bmp_readings['pressure'],
+                          aqi,
+                          0)
         
         pi.stop() # Disconnect from Pi.
         time.sleep(5)
