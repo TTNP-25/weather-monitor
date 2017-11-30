@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -yq \
     python-dev python-pip git unzip \
     build-essential libi2c-dev i2c-tools libffi-dev
 
-RUN pip install cffi
+RUN pip install cffi smbus-cffi
 
 RUN mkdir /opt/weather-monitor
 WORKDIR /opt/weather-monitor
